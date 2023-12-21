@@ -105,17 +105,19 @@ int t_xor()
     return s != t;
 }
 
-void run_tests()
+void run_gate_tests()
 {   
+    cout << "Testing Logic Gates" << endl;
     t_nand();
     t_not();
     t_and();
     t_or();
     t_xor();
+    cout << "---------------------" << endl;
 }
 
 int main(void)
 {
-    run_tests();           
+    run_gate_tests();           
     return 0;
 }
