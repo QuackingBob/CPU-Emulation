@@ -40,9 +40,24 @@ int t_nand()
     return s != t;
 }
 
+int t_not()
+{
+    int s = 0;
+    int t = 0;
+    cout << "NOT Tests" << endl;
+    for (bit a = 0; a < 2; a++)
+    {
+        s += print_case("!" + bit_int(a), not_gate(a) == !a);
+        t++;
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+    return s != t;
+}
+
 void run_tests()
 {   
     t_nand();
+    t_not();
 }
 
 int main(void)
