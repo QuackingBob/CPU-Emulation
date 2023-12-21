@@ -120,17 +120,19 @@ void run_gate_tests()
     t_and();
     t_or();
     t_xor();
-    cout << "---------------------" << endl;
+    cout << "---------------------" << endl << endl;
 }
 
 void run_signal_tests()
 {
+    cout << "BUS Check" << endl;
     bus b = 0b0000000000000000;
-    for (bit a = 0; a < 16; a++)
+    for (int i = 15; i >= 0; i--)
     {
-        set_bit(b, static_cast<int>(a), a);
+        set_bit(b, i, 1);
         cout << TAB << bus_str(b) << endl;
     }
+    
 }
 
 int main(void)

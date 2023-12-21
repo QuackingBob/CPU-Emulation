@@ -1,19 +1,19 @@
 #include "signals.hpp"
 
-bit n_transistor(bit a, bit b)
+bit nmos_transistor(bit a, bit b)
 {
     return a ? b : 0;
 }
 
-bit p_transistor(bit a, bit b)
+bit pmos_transistor(bit a, bit b)
 {
     return a ? 0 : b;
 }
 
 bit nand(bit a, bit b)
 {
-    // note 
-    return VCC - (n_transistor(n_transistor(a, VCC), b)); // traditional diagram
+    return VCC - (nmos_transistor(nmos_transistor(a, VCC), b)); // traditional diagram
+    // return pmos_transistor(a, VCC) + pmos_transistor(b, VCC) - nmos_transistor(a, nmos_transistor(b, VCC));
 }
 
 bit not_gate(bit a)
