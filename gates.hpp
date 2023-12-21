@@ -14,6 +14,7 @@ bit nand(bit a, bit b)
 {
     return VCC - (nmos_transistor(nmos_transistor(a, VCC), b)); // traditional diagram
     // return pmos_transistor(a, VCC) + pmos_transistor(b, VCC) - nmos_transistor(a, nmos_transistor(b, VCC));
+    // return pmos_transistor(a, VCC) + pmos_transistor(b, VCC - pmos_transistor(a, VCC)) - nmos_transistor(a, nmos_transistor(b, VCC))
 }
 
 bit not_gate(bit a)

@@ -132,7 +132,21 @@ void run_signal_tests()
         set_bit(b, i, 1);
         cout << TAB << bus_str(b) << endl;
     }
-    
+    if (b == 0b1111111111111111)
+    {
+        cout << TAB << "SUCCESS" << endl;
+    }
+    b = 0b0101010101010101;
+    int s = 0;
+    int t = 0;
+    for (int i = 0; i < 16; i++)
+    {
+        bit a = get_bit(b, i);
+        s += print_case("bit " + std::to_string(i) + ": " + bit_int(a), a, (i + 1) % 2);
+        t++;
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+    cout << "---------------------" << endl << endl;
 }
 
 int main(void)
