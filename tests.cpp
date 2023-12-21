@@ -5,8 +5,10 @@
 #include "alu.hpp"
 #include "mem.hpp"
 #include "processor.hpp"
+
 #include <iostream>
 #include <string>
+#include <bitset>
 
 #define TAB "   "
 
@@ -21,6 +23,11 @@ int print_case(string in, int out, int expect)
 string bit_int(bit a)
 {
     return std::to_string(static_cast<int>(a));
+}
+
+string bus_str(bus b)
+{
+    return std::bitset<sizeof(bus) * 8>(b).to_string();
 }
 
 int t_nand()
@@ -116,8 +123,19 @@ void run_gate_tests()
     cout << "---------------------" << endl;
 }
 
+void run_signal_tests()
+{
+    bus b = 0b0000000000000000;
+    for (bit a = 0; a < 16; a++)
+    {
+        set_bit(b, static_cast<int>(a), a);
+        cout << TAB << bus_str(b) << endl;
+    }
+}
+
 int main(void)
 {
-    run_gate_tests();           
+    run_gate_tests();        
+    run_signal_tests();   
     return 0;
 }
