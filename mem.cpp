@@ -15,7 +15,6 @@ D_Latch::D_Latch(bit start)
 
 void D_Latch::run(bit data, bit write_enable)
 {
-
     bit s_bar = nand(data, write_enable);
     bit r_bar = nand(not_gate(data), write_enable);
 

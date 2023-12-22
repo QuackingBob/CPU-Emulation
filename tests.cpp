@@ -406,6 +406,63 @@ void run_alu_tests()
     cout << "---------------------" << endl << endl;
 }
 
+void run_mux_tests()
+{
+    cout << "Testing Muxes" << endl;
+    // selector
+    cout << "Mux1to2 Tests" << endl;
+    int s = 0;
+    int t = 0;
+    for (bit i = 0; i < 2; i++)
+    {
+        for (bit d0 = 0; d0 < 2; d0++)
+        {
+            for (bit d1 = 0; d1 < 2; d1++)
+            {
+                s += print_case(bit_str(i) + "? " + bit_str(d1) + " : " + bit_str(d0), mux1to2(d0, d1, i), i?d1:d0);
+                t++;
+            }
+        }
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "Mux2to4 Tests" << endl;
+    s = 0;
+    t = 0;
+    for (bit s0 = 0; s0 < 2; s0++)
+    {
+        for (bit s1 = 0; s1 < 2; s1++)
+        {
+            for (bit d0 = 0; d0 < 2; d0++)
+            {
+                for (bit d1 = 0; d1 < 2; d1++)
+                {
+                    for (bit d2 = 0; d2 < 2; d2++)
+                    {
+                        for (bit d3 = 0; d3 < 2; d3++)
+                        {
+                            string label = bit_str(s0) + " " + bit_str(s1) + " " + bit_str(d0) + " " + bit_str(d1) + " " + bit_str(d2) + " " + bit_str(d3);
+                            bit expect = 0;
+                            switch (s0 + (s1 << 1))
+                            {
+                                case 0: expect = d0; break;
+                                case 1: expect = d1; break;
+                                case 2: expect = d2; break;
+                                case 3: expect = d3; break;
+                            }
+                            s += print_case(label, mux2to4(d0, d1, d2, d3, s0, s1), expect);
+                            t++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "---------------------" << endl << endl;
+}
+
 int main(void)
 {
     run_gate_tests();        
@@ -413,5 +470,6 @@ int main(void)
     run_arithmetic_tests();
     run_switch_tests();
     run_alu_tests();
+    run_mux_tests();
     return 0;
 }
