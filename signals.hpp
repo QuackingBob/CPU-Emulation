@@ -9,9 +9,13 @@
 #define bus int16_t
 #define VCC 1
 #define GND 0
+#define BUS_SIZE 16
+#define COMB_BIT_SIZE 8
 
 int check_index(int index);
 bit get_bit(bus b, int index);
 void set_bit(bus &b, int index, bit a);
+bit combine_bits(bit a, bit b, bit c);
+bit uncombine_bits(bit a, int index);
 
 #endif
