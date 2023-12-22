@@ -1,5 +1,5 @@
 #include "mem.hpp"
-#include "mux.cpp"
+#include "mux.hpp"
 #include <vector>
 using namespace std;
 

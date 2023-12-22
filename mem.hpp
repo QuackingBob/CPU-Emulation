@@ -3,5 +3,4 @@
 
 #include "gates.hpp"
 
-
 #endif
