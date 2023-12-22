@@ -6,6 +6,7 @@
 #define uint8_t char
 #define int16_t short
 #define bit uint8_t
+// for simplicity of variable naming, a bus is just a 16 bit container so it can be used as a bus, a register, or a number
 #define bus int16_t
 #define VCC 1
 #define GND 0

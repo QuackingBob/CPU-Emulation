@@ -23,6 +23,7 @@ void set_bit(bus &b, int index, bit a)
         b &= ~(1 << index);
 }
 
+// think of this as an 8 bit bus
 bit combine_bits_three(bit a, bit b, bit c)
 {
     return c | (b << 1) | (a << 2);

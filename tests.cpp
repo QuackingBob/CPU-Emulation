@@ -5,10 +5,12 @@
 #include "alu.hpp"
 // #include "mem.hpp"
 #include "processor.hpp"
+#include "progressbar.hpp"
 
 #include <iostream>
 #include <string>
 #include <bitset>
+#include <chrono>
 
 #define TAB "   "
 
@@ -280,6 +282,19 @@ void run_arithmetic_tests()
     run_logic_eq_zero_test(0x0000, 1);
     run_logic_eq_zero_test(0x0001, 0);
     run_logic_eq_zero_test(0xf002, 0);
+    // auto start = std::chrono::high_resolution_clock::now();
+    // ProgressBar progressBar(65536);
+    // s = 0;
+    // t = 0;
+    // for (bus i = -32768; i < 32767; i++)
+    // {
+    //     progressBar.update(i + 32768);
+    //     s += eq_zero(i) == (i == 0);
+    //     t++;
+    // }
+    // auto stop = std::chrono::high_resolution_clock::now();
+    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start); // microseconds if smaller
+    // cout << TAB << s << "/" << t << " CASES PASSED. Took " << duration.count() << " milliseconds" << endl;
 
     // gt_zero
     cout << "GT Zero Tests" << endl;
