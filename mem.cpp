@@ -1,108 +1,93 @@
 #include "mem.hpp"
+#include "gates.hpp"
 #include "mux.hpp"
 #include <vector>
+
 using namespace std;
 
-class D_Latch
+// D_Latch
+D_Latch::D_Latch(bit start)
+{
+    q = start;
+
+    q_bar = not_gate(start);
+}
+
+void D_Latch::run(bit data, bit write_enable)
 {
 
-private:
-    bit q_bar;
-    bit q;
+    bit s_bar = nand(data, write_enable);
+    bit r_bar = nand(not_gate(data), write_enable);
 
-public:
-    D_Latch(bit start)
-    {
-        q = start;
+    q_bar = nand(r_bar, q);
+    q = nand(s_bar, q_bar);
+}
 
-        q_bar = not_gate(start);
-    }
+bit D_Latch::get_q()
+{
+    return q;
+}
 
-    void run(bit data, bit write_enable)
-    {
+bit D_Latch::get_q_bar()
+{
+    return q_bar;
+}
 
-        bit s_bar = nand(data, write_enable);
-        bit r_bar = nand(not_gate(data), write_enable);
+// D_Flip_Flop
+D_Flip_Flop::D_Flip_Flop(bit start) : master(start), slave(start)
+{}
 
-        q_bar = nand(r_bar, q);
-        q = nand(s_bar, q_bar);
-    }
-
-    bit get_q()
-    {
-        return q;
-    }
-
-    bit get_q_bar()
-    {
-        return q_bar;
-    }
-};
-
-class D_Flip_Flop
+void D_Flip_Flop::run(bit data, bit clk)
 {
 
-private:
-    D_Latch master;
-    D_Latch slave;
+    master.run(data, not_gate(clk));
 
-public:
-    D_Flip_Flop(bit start) : master(start), slave(start)
-    {}
+    slave.run(master.get_q(), clk);
+}
 
-    void run(bit data, bit clk)
-    {
-
-        master.run(data, not_gate(clk));
-
-        slave.run(master.get_q(), clk);
-    }
-
-    bit output()
-    {
-        return slave.get_q();
-    }
-
-    bit complement()
-    {
-        return slave.get_q_bar();
-    }
-};
-
-class Parallel_Load_Register
+bit D_Flip_Flop::output()
 {
+    return slave.get_q();
+}
 
-private:
-    vector<D_Flip_Flop> reg;
+bit D_Flip_Flop::complement()
+{
+    return slave.get_q_bar();
+}
 
-
-public:
-    Parallel_Load_Register(bit start, int length)
+// Parallel_Load_Register
+Parallel_Load_Register::Parallel_Load_Register(bit start, int length)
+{
+    for (int i = 0; i < length; i++)
     {
+        reg.push_back(new D_Flip_Flop(start));
+    }
+}
 
+void Parallel_Load_Register::run(bit load, vector<bit> data, bit clk)
+{
+    for (int i = 0; i < reg.size(); i++)
+    {
+        reg[i]->run(mux1to2(reg[i]->output(), data[i], load), clk);
+    }
+}
 
-        for (int i = 0; i < length; i++)
-        {
-            reg.push_back(*(new D_Flip_Flop(start)));
-        }
+bus Parallel_Load_Register::get_output()
+{
+    bus result = 0x00;
+    for (int i = 0; i < reg.size(); i++)
+    {
+        set_bit(result, i, reg[i]->output());
     }
 
-    void run(bit load, vector<bit> data, bit clk)
-    {
-        for (int i = 0; i < reg.size(); i++)
-        {
-            reg[i].run(mux1to2(reg[i].output(), data[i], load), clk);
-        }
-    }
+    return result;
+}
 
-    bus get_output()
+Parallel_Load_Register::~Parallel_Load_Register()
+{
+    for (auto flipFlop : reg)
     {
-        bus result = 0x00;
-        for (int i = 0; i < reg.size(); i++)
-        {
-            set_bit(result, i, reg[i].output());
-        }
-
-        return result;
+        delete flipFlop;
     }
-};
+    reg.clear();
+}

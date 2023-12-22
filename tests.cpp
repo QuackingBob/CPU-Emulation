@@ -3,7 +3,7 @@
 #include "arithmetics.hpp"
 #include "switches.hpp"
 #include "alu.hpp"
-// #include "mem.hpp"
+#include "mem.hpp"
 #include "processor.hpp"
 #include "progressbar.hpp"
 
