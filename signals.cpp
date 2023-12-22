@@ -23,9 +23,14 @@ void set_bit(bus &b, int index, bit a)
         b &= ~(1 << index);
 }
 
-bit combine_bits(bit a, bit b, bit c)
+bit combine_bits_three(bit a, bit b, bit c)
 {
     return c | (b << 1) | (a << 2);
+}
+
+void combine_bits(bit &a, bit b, int index)
+{
+    a |= (b << index);
 }
 
 bit uncombine_bits(bit a, int index)

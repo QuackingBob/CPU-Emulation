@@ -152,7 +152,7 @@ void run_signal_tests()
     }
     
     cout << "BIT Combination Check" << endl;
-    bit c = combine_bits(1, 1, 1);
+    bit c = combine_bits_three(1, 1, 1);
     cout << TAB << "combined: " << bit_str_binary(c) << endl;
     if (c == 0b00000111)
     {
@@ -183,6 +183,24 @@ void run_multibit_subtractor_test(bus a, bus b, bus expected)
     print_case(bus_str(a) + " - " + bus_str(b), result, expected);
 }
 
+void run_logic_lt_zero_test(bus a, bus expected)
+{
+    bit result = lt_zero(a);
+    print_case(bus_str(a) + " < 0", result, expected);
+}
+
+void run_logic_eq_zero_test(bus a, bus expected)
+{
+    bit result = eq_zero(a);
+    print_case(bus_str(a) + " == 0", result, expected);
+}
+
+void run_logic_gt_zero_test(bus a, bus expected)
+{
+    bit result = gt_zero(a);
+    print_case(bus_str(a) + " > 0", result, expected);
+}
+
 void run_arithmetic_tests()
 {
     cout << "Testing Arithmetic Ops" << endl;
@@ -210,6 +228,7 @@ void run_arithmetic_tests()
     run_multibit_adder_test(0x0001, 0x0001, 0x0002);
     run_multibit_adder_test(0x0004, 0x0002, 0x0006);
     run_multibit_adder_test(0x0a04, 0x0b02, 0x0a04+0x0b02);
+
     // subtractor
     cout << "Subtractor Tests" << endl;
     run_multibit_subtractor_test(0x0000, 0x0000, 0x0000);
@@ -218,16 +237,80 @@ void run_arithmetic_tests()
     run_multibit_subtractor_test(0x0a04, 0x0b02, 0x0a04-0x0b02);
     run_multibit_subtractor_test(0x0001, 0x0002, 0x0001-0x0002);
 
+    //logic
+    cout << "Logic Tests" << endl;
+
+    // lt_zero
+    cout << "LT Zero Tests" << endl;
+    run_logic_lt_zero_test(0x0000, 0);
+    run_logic_lt_zero_test(0x0001, 0);
+    run_logic_lt_zero_test(0x0002, 0);
+    run_logic_lt_zero_test(0xffff, 1);
+
+    // eq_zero
+    cout << "EQ Zero Tests" << endl;
+    run_logic_eq_zero_test(0x0000, 1);
+    run_logic_eq_zero_test(0x0001, 0);
+    run_logic_eq_zero_test(0xf002, 0);
+
+    // gt_zero
+    cout << "GT Zero Tests" << endl;
+    run_logic_gt_zero_test(0x0000, 0);
+    run_logic_gt_zero_test(0x0001, 1);
+    run_logic_gt_zero_test(0xf002, 0);
+
     cout << "---------------------" << endl << endl;
 }
 
+int run_select_bus_test(bit s, bus A, bus B, bus expected)
+{
+    bus result = select_bus(s, A, B);
+    print_case(bit_str(s) + " ? " + bus_str(A) + " : " + bus_str(B), result, expected);
+    return result == expected;
+}
 
+void run_switch_tests()
+{
+    cout << "Testing Switches" << endl;
+    // selector
+    cout << "Selector Tests" << endl;
+    
+    cout << "Select Bit" << endl;
+    int s = 0;
+    int t = 0;
+    for (bit i = 0; i < 2; i++)
+    {
+        for (bit b0 = 0; b0 < 2; b0++)
+        {
+            for (bit b1 = 0; b1 < 2; b1++)
+            {
+                s += print_case(bit_str(i) + "? " + bit_str(b1) + " : " + bit_str(b0), selector(i, b1, b0), i?b1:b0);
+                t++;
+            }
+        }
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
 
+    cout << "Select Bus" << endl;
+    s = 0;
+    t = 0;
+    s+=run_select_bus_test(0, 0x0000, 0x0000, 0x0000);t++;
+    s+=run_select_bus_test(0, 0x0001, 0x0001, 0x0001);t++;
+    s+=run_select_bus_test(0, 0x0004, 0x0002, 0x0002);t++;
+    s+=run_select_bus_test(0, 0x0a04, 0x0b02, 0x0b02);t++;
+    s+=run_select_bus_test(1, 0x0000, 0x0000, 0x0000);t++;
+    s+=run_select_bus_test(1, 0x0001, 0x0001, 0x0001);t++;
+    s+=run_select_bus_test(1, 0x0004, 0x0002, 0x0004);t++;
+    s+=run_select_bus_test(1, 0x0a04, 0x0b02, 0x0a04);t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+    cout << "---------------------" << endl << endl;
+}
 
 int main(void)
 {
     run_gate_tests();        
     run_signal_tests();   
     run_arithmetic_tests();
+    run_switch_tests();
     return 0;
 }

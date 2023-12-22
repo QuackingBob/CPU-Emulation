@@ -15,7 +15,8 @@
 int check_index(int index);
 bit get_bit(bus b, int index);
 void set_bit(bus &b, int index, bit a);
-bit combine_bits(bit a, bit b, bit c);
+bit combine_bits_three(bit a, bit b, bit c);
+void combine_bits(bit &a, bit b, int index);
 bit uncombine_bits(bit a, int index);
 
 #endif
