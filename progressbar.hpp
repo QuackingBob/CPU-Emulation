@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cmath>
 
 class ProgressBar {
 public:
@@ -22,17 +23,17 @@ ProgressBar::ProgressBar(int total, int width, char symbol, char background)
 
 void ProgressBar::update(int current) {
     float progress = static_cast<float>(current) / total_;
-    int barWidth = static_cast<int>(progress * width_);
+    int bar_width = static_cast<int>(progress * width_);
 
     std::cout << "\r[";
-    for (int i = 0; i < barWidth; ++i) {
+    for (int i = 0; i < bar_width; ++i) {
         std::cout << symbol_;
     }
-    for (int i = barWidth; i < width_; ++i) {
+    for (int i = bar_width; i < width_; ++i) {
         std::cout << background_;
     }
 
-    std::cout << "] " << std::setw(3) << static_cast<int>(progress * 100.0) << "%";
+    std::cout << "] " << std::setw(3) << round(progress * 100.0) << "%";
     std::cout.flush();
 
     if (current == total_) {
