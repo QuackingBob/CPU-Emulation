@@ -47,3 +47,43 @@ bus arithmetic_unit(bit op1, bit op0, bus a, bus b)
         subtractor(a, VCC)
     );
 }
+
+/*
+sel : logic or arithmetic unit
+
+Input	Output
+sel	op1	op0	
+0	0	0	A and B
+0	0	1	A or B
+0	1	0	A xor B
+0	1	1	invert A
+1	0	0	A + B
+1	1	0	A - B
+1	0	1	A + 1
+1	1	1	A - 1
+
+if zl : zeros left operand
+if sw : swaps operands
+*/
+bus alu(bit sel, bit op1, bit op0, bit zl, bit sw, bus a, bus b)
+{
+    bus l = select_bus(
+                zl,
+                GND,
+                select_bus(
+                    sw,
+                    b,
+                    a
+                )
+            );
+    bus r = select_bus(
+                sw,
+                a,
+                b
+            );
+    return select_bus(
+        sel,
+        arithmetic_unit(op1, op0, l, r),
+        logic_unit(op1, op0, l, r)
+    );
+}
