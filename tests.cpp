@@ -340,12 +340,24 @@ void run_alu_tests()
     cout << "Testing Logic Unit" << endl;
     int s = 0;
     int t = 0;
-    bus a = 0x0f20;
-    bus b = 0x1002;
+    bus a = 0b0000100100010001;
+    bus b = 0b0001000100100001;
     s += print_case("0, 0, " + bus_str(a) + " & " + bus_str(b), logic_unit(0, 0, a, b), a & b); t++;
     s += print_case("0, 1, " + bus_str(a) + " | " + bus_str(b), logic_unit(0, 1, a, b), a | b); t++;
     s += print_case("1, 0, " + bus_str(a) + " ^ " + bus_str(b), logic_unit(1, 0, a, b), xor_bus(a, b)); t++;
     s += print_case("1, 1, !" + bus_str(a), logic_unit(1, 1, a, b), inv_bus(a)); t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+    cout << "Testing Arithmetic Unit" << endl;
+    s = 0;
+    t = 0;
+    a = 0x0004;
+    b = 0x0001;
+    s += print_case("0, 0, " + bus_str(a) + " + " + bus_str(b), arithmetic_unit(0, 0, a, b), a + b); t++;
+    s += print_case("0, 1, " + bus_str(a) + " + 1", arithmetic_unit(0, 1, a, b), a + 1); t++;
+    s += print_case("1, 0, " + bus_str(a) + " - " + bus_str(b), arithmetic_unit(1, 0, a, b), a - b); t++;
+    s += print_case("1, 1, " + bus_str(a) + " - 1", arithmetic_unit(1, 1, a, b), a - 1); t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
     cout << "---------------------" << endl << endl;
 }
 
