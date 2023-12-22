@@ -1,5 +1,7 @@
 #include "gates.hpp"
 
+// bit gates
+
 bit nmos_transistor(bit a, bit b)
 {
     return a ? b : 0;
@@ -34,4 +36,14 @@ bit or_gate(bit a, bit b)
 bit xor_gate(bit a, bit b)
 {
     return and_gate(nand(a, b), or_gate(a, b));
+}
+
+// bus gates
+
+bus inv_bus(bus a){
+    bus b;
+    for(int i = 0; i < 16; i++){
+        set_bit(b, i, not_gate(get_bit(a, i)));
+    }
+    return b;
 }

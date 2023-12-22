@@ -3,7 +3,7 @@
 #include "arithmetics.hpp"
 #include "switches.hpp"
 #include "alu.hpp"
-#include "mem.hpp"
+// #include "mem.hpp"
 #include "processor.hpp"
 
 #include <iostream>
@@ -177,6 +177,12 @@ void run_multibit_adder_test(bus a, bus b, bus expected)
     print_case(bus_str(a) + " + " + bus_str(b), result, expected);
 }
 
+void run_multibit_subtractor_test(bus a, bus b, bus expected)
+{
+    bus result = subtractor(a, b);
+    print_case(bus_str(a) + " - " + bus_str(b), result, expected);
+}
+
 void run_arithmetic_tests()
 {
     cout << "Testing Arithmetic Ops" << endl;
@@ -204,7 +210,14 @@ void run_arithmetic_tests()
     run_multibit_adder_test(0x0001, 0x0001, 0x0002);
     run_multibit_adder_test(0x0004, 0x0002, 0x0006);
     run_multibit_adder_test(0x0a04, 0x0b02, 0x0a04+0x0b02);
-    
+    // subtractor
+    cout << "Subtractor Tests" << endl;
+    run_multibit_subtractor_test(0x0000, 0x0000, 0x0000);
+    run_multibit_subtractor_test(0x0001, 0x0001, 0x0000);
+    run_multibit_subtractor_test(0x0004, 0x0002, 0x0002);
+    run_multibit_subtractor_test(0x0a04, 0x0b02, 0x0a04-0x0b02);
+    run_multibit_subtractor_test(0x0001, 0x0002, 0x0001-0x0002);
+
     cout << "---------------------" << endl << endl;
 }
 

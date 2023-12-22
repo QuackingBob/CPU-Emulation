@@ -1,64 +1,77 @@
 #include "mem.hpp"
 
-class D_Latch {
+class D_Latch
+{
 
-    private:
+private:
+    bit q_bar;
+    bit q;
 
-        bit q_bar;
-        bit q;
-
-    D_Latch(bit start) {
+    D_Latch(bit start)
+    {
 
         q = start;
 
-        q_bar = ~start & 0x01;
+        q_bar = not_gate(start);
     }
 
-    void run(bit data, bit write_enable) {
-
+    void run(bit data, bit write_enable)
+    {
 
         bit s_bar = nand(data, write_enable);
         bit r_bar = nand(not_gate(data), write_enable);
 
-        p = nand(r_bar, q);
+        q_bar = nand(r_bar, q);
         q = nand(s_bar, q_bar);
     }
 
-    bit get_q() {
+public:
+    bit get_q()
+    {
         return q;
     }
 
-    bit get_q_bar() {
+    bit get_q_bar()
+    {
         return q_bar;
     }
-}
+};
 
-class D_Flip_Flop {
+class D_Flip_Flop
+{
 
-    private:
+private:
+    D_Latch master;
+    D_Latch slave;
 
-        D_Latch master;
-        D_Latch slave;
-
-    D_Flip_Flop(bit start) {
+    D_Flip_Flop(bit start)
+    {
 
         master = new D_Latch(start);
         slave = new D_Latch(start);
     }
 
-    void run(bit data, bit clk) {
+public:
+    void run(bit data, bit clk)
+    {
 
-        master.run(data, ~clk & 0x01);
+        master.run(data, not_gate(clk));
 
         slave.run(master.get_q(), clk);
-
     }
 
-    bit get_q
+    bit output()
+    {
+        return slave.get_q();
+    }
 
-}
+    bit complement()
+    {
+        return slave.get_q_bar();
+    }
 
-class Parallel_Load_Register {
+};
 
-
-}
+class Parallel_Load_Register
+{
+};

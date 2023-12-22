@@ -11,4 +11,6 @@ bit and_gate(bit a, bit b);
 bit or_gate(bit a, bit b);
 bit xor_gate(bit a, bit b);
 
+bus inv_bus(bus a);
+
 #endif
