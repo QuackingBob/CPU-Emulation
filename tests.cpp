@@ -117,6 +117,11 @@ int t_xor()
     return s != t;
 }
 
+int run_gate_bus_test(bus (*f)(bus, bus), bus a, bus b, bus expect, char rep)
+{
+    return print_case(bus_str(a) + " " + rep + " " + bus_str(b), f(a, b), expect);
+}
+
 void run_gate_tests()
 {   
     cout << "Testing Logic Gates" << endl;
@@ -125,6 +130,29 @@ void run_gate_tests()
     t_and();
     t_or();
     t_xor();
+    cout << "Bus Tests" << endl;
+    cout << "AND" << endl;
+    int s = 0;
+    int t = 0;
+    s += run_gate_bus_test((&and_bus), 0x0001, 0x0000, 0x0000, '&'); t++;
+    s += run_gate_bus_test((&and_bus), 0x0001, 0x0001, 0x0001, '&'); t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+    cout << "OR" << endl;
+    s = 0;
+    t = 0;
+    s += run_gate_bus_test((&or_bus), 0x0001, 0x0001, 0x0001, '|'); t++;
+    s += run_gate_bus_test((&or_bus), 0x0000, 0x0000, 0x0000, '|'); t++;
+    s += run_gate_bus_test((&or_bus), 0x0001, 0x0000, 0x0001, '|'); t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+    cout << "XOR" << endl;
+    s = 0;
+    t = 0;
+    s += run_gate_bus_test((&xor_bus), 0x0001, 0x0000, 0x0001, '^'); t++;
+    s += run_gate_bus_test((&xor_bus), 0x0000, 0x0001, 0x0001, '^'); t++;
+    s += run_gate_bus_test((&xor_bus), 0x0001, 0x0001, 0x0000, '^'); t++;
+    s += run_gate_bus_test((&xor_bus), 0x0000, 0x0000, 0x0000, '^'); t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
     cout << "---------------------" << endl << endl;
 }
 

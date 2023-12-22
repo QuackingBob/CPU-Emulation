@@ -40,10 +40,38 @@ bit xor_gate(bit a, bit b)
 
 // bus gates
 
-bus inv_bus(bus a){
+bus inv_bus(bus a)
+{
     bus b;
     for(int i = 0; i < 16; i++){
         set_bit(b, i, not_gate(get_bit(a, i)));
     }
     return b;
+}
+
+bus and_bus(bus a, bus b)
+{
+    bus c;
+    for(int i = 0; i < 16; i++){
+        set_bit(c, i, and_gate(get_bit(a, i), get_bit(b, i)));
+    }
+    return c;
+}
+
+bus or_bus(bus a, bus b)
+{
+    bus c;
+    for(int i = 0; i < 16; i++){
+        set_bit(c, i, or_gate(get_bit(a, i), get_bit(b, i)));
+    }
+    return c;
+}
+
+bus xor_bus(bus a, bus b)
+{
+    bus c;
+    for(int i = 0; i < 16; i++){
+        set_bit(c, i, xor_gate(get_bit(a, i), get_bit(b, i)));
+    }
+    return c;
 }
