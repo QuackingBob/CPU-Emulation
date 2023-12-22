@@ -347,6 +347,7 @@ void run_alu_tests()
     s += print_case("1, 0, " + bus_str(a) + " ^ " + bus_str(b), logic_unit(1, 0, a, b), xor_bus(a, b)); t++;
     s += print_case("1, 1, !" + bus_str(a), logic_unit(1, 1, a, b), inv_bus(a)); t++;
     cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
     cout << "Testing Arithmetic Unit" << endl;
     s = 0;
     t = 0;
@@ -356,6 +357,35 @@ void run_alu_tests()
     s += print_case("0, 1, " + bus_str(a) + " + 1", arithmetic_unit(0, 1, a, b), a + 1); t++;
     s += print_case("1, 0, " + bus_str(a) + " - " + bus_str(b), arithmetic_unit(1, 0, a, b), a - b); t++;
     s += print_case("1, 1, " + bus_str(a) + " - 1", arithmetic_unit(1, 1, a, b), a - 1); t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "Testing Combined ALU unit" << endl;
+    s = 0;
+    t = 0;
+    a = 0x0004;
+    b = 0x0001;
+    s += print_case("0, 0, 0, 0, 0, " + bus_str(a) + " & " + bus_str(b), alu(0, 0, 0, 0, 0, a, b), a & b); t++;
+    s += print_case("1, 0, 1, 0, 0, " + bus_str(a) + " + " + bus_str(b), alu(1, 0, 1, 0, 0, a, b), a + b); t++;
+    s += print_case("0, 1, 1, 0, 0, !" + bus_str(a), alu(0, 1, 1, 0, 0, a, b), inv_bus(a)); t++;
+    s += print_case("1, 1, 0, 0, 1, " + bus_str(b) + " - " + bus_str(a), alu(1, 1, 0, 0, 1, a, b), b - a); t++;
+    s += print_case("1, 1, 1, 1, 0, " + bus_str(a) + " - 1", alu(1, 1, 1, 1, 0, a, b), -1); t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "Testing Conditional Unit" << endl;
+    s = 0;
+    t = 0;
+    a = 0x00ff;
+    for (bit lt = 0; lt < 2; lt++)
+    {
+        for (bit eq = 0; eq < 2; eq++)
+        {
+            for (bit gt = 0; gt < 2; gt++)
+            {
+                bit cond = (lt && a < 0) || (eq && a == 0) || (gt && a > 0);
+                s += print_case(bit_str(lt) + ", " + bit_str(eq) + ", " + bit_str(gt) + ", " + bus_str(a), condition(lt, eq, gt, a), cond); t++;
+            }
+        }
+    }
     cout << TAB << s << "/" << t << " CASES PASSED" << endl;
 
     cout << "---------------------" << endl << endl;

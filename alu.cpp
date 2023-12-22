@@ -87,3 +87,14 @@ bus alu(bit sel, bit op1, bit op0, bit zl, bit sw, bus a, bus b)
         logic_unit(op1, op0, l, r)
     );
 }
+
+bit condition(bit lt, bit eq, bit gt, bus x)
+{
+    return or_gate(
+        or_gate(
+            and_gate(eq, eq_zero(x)),
+            and_gate(gt, gt_zero(x))
+        ),
+        and_gate(lt, lt_zero(x))
+    );
+}
