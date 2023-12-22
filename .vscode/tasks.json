@@ -7,7 +7,14 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file} signals.cpp gates.cpp arithmetics.cpp",
+                "${file}",
+                "signals.cpp",
+                "gates.cpp",
+                "arithmetics.cpp",
+                "switches.cpp",
+                "alu.cpp",
+                "mux.cpp",
+                "mem.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
