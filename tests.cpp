@@ -8,6 +8,7 @@
 #include "processor.hpp"
 #include "progressbar.hpp"
 #include "stats.hpp"
+#include "components.hpp"
 
 #include <iostream>
 #include <string>
@@ -530,18 +531,52 @@ void run_mem_tests()
     s = 0;
     t = 0;
     prev_clk = 1;
-    prev_d = 0;
+    reg prev_data = 0;
 
-    cout << TAB << "d" << TAB << TAB << TAB << TAB << TAB << "c-c q" << endl;
+    bit load = 0;
+
+    cout << TAB << "d" << TAB << TAB << TAB << TAB << " c-c q" << endl;
 
     for(int i = 0; i < 16; i++) {
 
-        
+        if(i >= 8) {
+            load = 1;
+        }
+        clk = i % 2;
+
+        reg prev_val = reggie.get_output();
+
+        reggie.run(load, d, clk);
+        reg val = reggie.get_output();
+
+        bit trigger = (!prev_clk) && clk && load;
+        reg expect = trigger ? prev_data : prev_val;
+        s += (expect == val); t++;
+        cout << TAB << bus_str(d) + " " + bit_str(prev_clk) + " " + bit_str(clk) + " " + bus_str(val) + " " << ((expect == val) ? " SUCCESS" : " FAIL") << endl;
+        prev_clk = clk;
+        prev_data = d;
+
+        d = d << 1;
+
+
 
     }
 
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "---------------------" << endl << endl;
 
 
+
+}
+
+void run_component_tests()
+{
+    cout << "Testing Components" << endl;
+    cout << "Testing Counter" << endl;
+    program_counter counter(0, 16);
+
+    cout << "---------------------" << endl << endl;
 }
 
 int main()
