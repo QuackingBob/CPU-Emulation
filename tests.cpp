@@ -4,8 +4,10 @@
 #include "switches.hpp"
 #include "alu.hpp"
 #include "mem.hpp"
+#include "mux.hpp"
 #include "processor.hpp"
 #include "progressbar.hpp"
+#include "stats.hpp"
 
 #include <iostream>
 #include <string>
@@ -463,13 +465,95 @@ void run_mux_tests()
     cout << "---------------------" << endl << endl;
 }
 
-int main(void)
+void run_mem_tests()
 {
-    run_gate_tests();        
-    run_signal_tests();   
+    cout << "Testing Memory Components" << endl;
+
+    cout << "Testing Latch" << endl;
+    int s = 0;
+    int t = 0;
+    for (bit start = 0; start < 2; start++)
+    {
+        D_Latch latch(0);
+        bit state;
+
+        for (bit d = 0; d < 2; d++)
+        {
+            for (bit e = 0; e < 2; e++)
+            {
+                state = latch.get_q();
+                latch.run(d, e);
+                bit q = latch.get_q();
+                bit q_bar = latch.get_q_bar();
+                bit expect = e ? d : state;
+                s += (expect == q && !expect == q_bar); t++;
+                cout << TAB << bit_str(d) + " " + bit_str(e) + " " + bit_str(q) + " " + bit_str(q_bar) << ((expect == q && !expect == q_bar) ? " SUCCESS" : " FAIL") << endl;
+            }
+        }
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "Testing Flip-Flop" << endl;
+    D_Flip_Flop flip(1);
+    s = 0;
+    t = 0;
+    bit prev_clk = 1;
+    bit prev_d = 0;
+    bit clk;
+    cout << TAB << "d c-c q q-" << endl;
+    for(int i = 0; i < 10; i++) {
+        clk = i % 2;
+        bit d = (i % 3) % 2;
+        bit prev_val = flip.output();
+        bit prev_comp = flip.complement();
+        flip.run(d, clk);
+        bit val = flip.output();
+        bit comp = flip.complement();
+
+        bit trigger = (!prev_clk) && clk;
+        bit expect = trigger ? prev_d : prev_val;
+        s += (expect == val && !expect == comp); t++;
+        cout << TAB << bit_str(d) + " " + bit_str(prev_clk) + " " + bit_str(clk) + " " + bit_str(val) + " " + bit_str(comp) << ((expect == val && !expect == comp) ? " SUCCESS" : " FAIL") << endl;
+        prev_clk = clk;
+        prev_d = d;
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "---------------------" << endl << endl;
+
+    cout << "Testing Registers" << endl;
+
+    Parallel_Load_Register reggie(0, 16);
+
+    reg d = 0x0001;
+
+    s = 0;
+    t = 0;
+    prev_clk = 1;
+    prev_d = 0;
+
+    cout << TAB << "d" << TAB << TAB << TAB << TAB << TAB << "c-c q" << endl;
+
+    for(int i = 0; i < 16; i++) {
+
+        
+
+    }
+
+
+
+}
+
+int main()
+{
+    stats::reset();
+    run_gate_tests();
+    run_signal_tests();
     run_arithmetic_tests();
     run_switch_tests();
     run_alu_tests();
     run_mux_tests();
+    run_mem_tests();
+    cout << stats::transistor_count << " Transistor Operations used" << endl;
     return 0;
 }

@@ -2,6 +2,7 @@
 #define GATES_HPP
 
 #include "signals.hpp"
+#include "stats.hpp"
 
 bit nmos_transistor(bit a, bit b);
 bit pmos_transistor(bit a, bit b);

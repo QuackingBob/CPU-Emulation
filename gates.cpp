@@ -1,9 +1,10 @@
 #include "gates.hpp"
-
+#include "stats.hpp"
 // bit gates
 
 bit nmos_transistor(bit a, bit b)
 {
+    stats::transistor_count += 1;
     return a ? b : 0;
 }
 
@@ -14,6 +15,7 @@ bit pmos_transistor(bit a, bit b)
 
 bit nand(bit a, bit b)
 {
+
     return VCC - (nmos_transistor(nmos_transistor(a, VCC), b)); // traditional diagram
     // return pmos_transistor(a, VCC) + pmos_transistor(b, VCC - pmos_transistor(a, VCC)) - nmos_transistor(a, nmos_transistor(b, VCC)) // hardware optimized circuit
 }
@@ -74,4 +76,23 @@ bus xor_bus(bus a, bus b)
         set_bit(c, i, xor_gate(get_bit(a, i), get_bit(b, i)));
     }
     return c;
+}
+
+bit tri_state_buffer(bit input, bit current, bit gate)
+{
+    return pmos_transistor(gate, current) + nmos_transistor(gate, input);
+}
+
+bus tri_state_buffer_bus(bus input, bus current, bit gate)
+{
+    bus result;
+
+    for(int i = 0; i < 16; i++)
+    {
+
+        set_bit(result, i, tri_state_buffer(get_bit(input, i), get_bit(current, i), gate));
+
+    }
+
+    return result;
 }

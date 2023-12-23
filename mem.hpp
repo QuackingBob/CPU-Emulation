@@ -39,12 +39,12 @@ class Parallel_Load_Register
 {
 
 private:
-    std::vector<D_Flip_Flop *> reg;
+    std::vector<D_Flip_Flop *> reggie;
 
 public:
     Parallel_Load_Register(bit start, int length);
-    void run(bit load, std::vector<bit> data, bit clk);
-    bus get_output();
+    void run(bit load, reg data, bit clk);
+    reg get_output();
     ~Parallel_Load_Register();
 };
 

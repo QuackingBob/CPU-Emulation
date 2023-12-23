@@ -9,8 +9,8 @@ using namespace std;
 D_Latch::D_Latch(bit start)
 {
     q = start;
-
     q_bar = not_gate(start);
+
 }
 
 void D_Latch::run(bit data, bit write_enable)
@@ -18,8 +18,12 @@ void D_Latch::run(bit data, bit write_enable)
     bit s_bar = nand(data, write_enable);
     bit r_bar = nand(not_gate(data), write_enable);
 
-    q_bar = nand(r_bar, q);
-    q = nand(s_bar, q_bar);
+
+    bit q_curr = q;
+    bit q_bar_curr = q_bar;
+
+    q = nand(s_bar, nand(r_bar, q_curr));
+    q_bar = nand(r_bar, nand(s_bar, q_bar_curr));
 }
 
 bit D_Latch::get_q()
@@ -59,24 +63,24 @@ Parallel_Load_Register::Parallel_Load_Register(bit start, int length)
 {
     for (int i = 0; i < length; i++)
     {
-        reg.push_back(new D_Flip_Flop(start));
+        reggie.push_back(new D_Flip_Flop(start));
     }
 }
 
-void Parallel_Load_Register::run(bit load, vector<bit> data, bit clk)
+void Parallel_Load_Register::run(bit load, reg data, bit clk)
 {
-    for (int i = 0; i < reg.size(); i++)
+    for (int i = 0; i < reggie.size(); i++)
     {
-        reg[i]->run(mux1to2(reg[i]->output(), data[i], load), clk);
+        reggie[i]->run(mux1to2(reggie[i]->output(), get_bit(data,i), load), clk);
     }
 }
 
-bus Parallel_Load_Register::get_output()
+reg Parallel_Load_Register::get_output()
 {
-    bus result = 0x00;
-    for (int i = 0; i < reg.size(); i++)
+    reg result = 0x0000;
+    for (int i = 0; i < reggie.size(); i++)
     {
-        set_bit(result, i, reg[i]->output());
+        set_bit(result, i, reggie[i]->output());
     }
 
     return result;
@@ -84,9 +88,9 @@ bus Parallel_Load_Register::get_output()
 
 Parallel_Load_Register::~Parallel_Load_Register()
 {
-    for (auto flipFlop : reg)
+    for (auto flipFlop : reggie)
     {
         delete flipFlop;
     }
-    reg.clear();
+    reggie.clear();
 }
