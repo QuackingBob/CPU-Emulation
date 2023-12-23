@@ -39,6 +39,6 @@ void ProgressBar::update(int current) {
     if (current == total_) {
         std::cout << std::endl;
     }
-}
+} 
 
 #endif
