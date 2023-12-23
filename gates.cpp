@@ -96,3 +96,21 @@ bus tri_state_buffer_bus(bus input, bus current, bit gate)
 
     return result;
 }
+
+bit and4(bit a1, bit a2, bit a3, bit a4) {
+
+    return and_gate(a1, and_gate(a2, and_gate(a3, a4)));
+}
+
+bit and8(bit a1, bit a2, bit a3, bit a4, bit a5, bit a6, bit a7, bit a8) {
+
+    return and_gate(and4(a1, a2, a3, a4), and4(a5, a6, a7, a8));
+}
+
+bit and16(bus a16) {
+
+    bit out1 = and8(get_bit(a16, 0), get_bit(a16, 1), get_bit(a16, 2), get_bit(a16, 3), get_bit(a16, 4), get_bit(a16, 5), get_bit(a16, 6), get_bit(a16, 7));
+    bit out2 = and8(get_bit(a16, 8), get_bit(a16, 9), get_bit(a16, 10), get_bit(a16, 11), get_bit(a16, 12), get_bit(a16, 13), get_bit(a16, 14), get_bit(a16, 15));
+
+    return and_gate(out1, out2);
+}

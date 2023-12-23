@@ -1,10 +1,12 @@
 #include "switches.hpp"
 
+// a if s == 1 else b
 bit selector(bit s, bit a, bit b)
 {
     return or_gate(and_gate(s, a), and_gate(not_gate(s), b));
 }
 
+// a if s == 1 else b
 bus select_bus(bit s, bus a, bus b)
 {
     bus out;

@@ -201,6 +201,12 @@ void run_signal_tests()
         t++;
     }
     cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "Sign Extend Test" << endl;
+    s = 0;
+    t = 0;
+    print_case(bus_str(0b0000000000101010), sign_extend(0b0000000000101010, 6), 0b0000000000101010)
+
     cout << "---------------------" << endl << endl;
 }
 
@@ -574,7 +580,45 @@ void run_component_tests()
 {
     cout << "Testing Components" << endl;
     cout << "Testing Counter" << endl;
-    program_counter counter(0, 16);
+    program_counter counter(0);
+    bit clk = 0;
+    bus out;
+    cout << "INCR Only" << endl;
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            clk = j % 2;
+//            out = counter.update(1, 0, 0, clk);
+            out = counter.run(0, 0, 1, clk, 0, 0);
+        }
+        cout << TAB << out << ", ";
+    }
+    cout << endl;
+
+    cout << "No Change" << endl;
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            clk = j % 2;
+            out = counter.run(1, 0, 0, clk, i % 2, 0);
+        }
+        cout << TAB << out << ", ";
+    }
+    cout << endl;
+
+    cout << "Set Value" << endl;
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 2; j++)
+        {
+            clk = j % 2;
+            out = counter.run(0, 1, 1, clk, 2 * i, 1);
+        }
+        cout << TAB << out << ", ";
+    }
+    cout << endl;
 
     cout << "---------------------" << endl << endl;
 }
@@ -589,6 +633,7 @@ int main()
     run_alu_tests();
     run_mux_tests();
     run_mem_tests();
+    run_component_tests();
     cout << stats::transistor_count << " Transistor Operations used" << endl;
     return 0;
 }

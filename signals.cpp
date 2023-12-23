@@ -39,3 +39,22 @@ bit uncombine_bits(bit a, int index)
     check_index(index, COMB_BIT_SIZE);
     return (a >> index) & 0x0001;
 }
+
+bus sign_extend(bus b, int len)
+{
+    bit a = get_bit(b, len - 1);
+    for (int i = len; i < BUS_SIZE; i++)
+    {
+        set_bit(b, i, a);
+    }
+    return b;
+}
+
+bus zero_extend(bus b, int len)
+{
+    for (int i = len; i < BUS_SIZE; i++)
+    {
+        set_bit(b, i, 0);
+    }
+    return b;
+}
