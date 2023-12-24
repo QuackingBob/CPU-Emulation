@@ -1,9 +1,10 @@
 #include "mux.hpp"
+#include "switches.hpp"
 
 
 bit mux1to2(bit zero, bit one, bit select) {
-
-    return or_gate(and_gate(zero, not_gate(select)), and_gate(one, select));
+    return selector(select, one, zero); // same purpose, diff names
+    // return or_gate(and_gate(zero, not_gate(select)), and_gate(one, select));
 }
 
 bit mux2to4(bit zero, bit one, bit two, bit three, bit select0, bit select1) {

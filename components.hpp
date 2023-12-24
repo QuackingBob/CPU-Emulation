@@ -19,4 +19,14 @@ public:
     bus run(bit s0, bit s1, bit ld_pc, bit clk, bus main_bus, bus addr);
 };
 
+class eval_addr
+{
+private:
+    bus addr2mux(bit s0, bit s1, bus ir);
+    bus addr1mux(bit s, bus sr1_out, bus pc);
+
+public:
+    bus run(bit addr1_s, bit addr2_s0, bit addr2_s1, bus ir, bus sr1_out, bus pc);
+};
+
 #endif

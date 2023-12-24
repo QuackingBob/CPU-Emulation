@@ -205,7 +205,20 @@ void run_signal_tests()
     cout << "Sign Extend Test" << endl;
     s = 0;
     t = 0;
-    print_case(bus_str(0b0000000000101010), sign_extend(0b0000000000101010, 6), 0b0000000000101010);
+    s += print_case(bus_str(0b0000000000101010) + "-> " + bus_str(sign_extend(0b0000000000101010, 6)), sign_extend(0b0000000000101010, 6), (bus)0b1111111111101010); t++;
+    s += print_case(bus_str(0b0000000000101010) + "-> " + bus_str(sign_extend(0b0000000000101010, 7)), sign_extend(0b0000000000101010, 7), (bus)0b0000000000101010); t++;
+    s += print_case(bus_str(0b0000000000101010) + "-> " + bus_str(sign_extend(0b0000000000101010, 4)), sign_extend(0b0000000000101010, 4), (bus)0b1111111111111010); t++;
+    s += print_case(bus_str(0b0000000000101010) + "-> " + bus_str(sign_extend(0b0000000000101010, 3)), sign_extend(0b0000000000101010, 3), (bus)0b0000000000000010); t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "zero Extend Test" << endl;
+    s = 0;
+    t = 0;
+    s += print_case(bus_str(0b0000000000101010) + "-> " + bus_str(zero_extend(0b0000000000101010, 6)), zero_extend(0b0000000000101010, 6), (bus)0b0000000000101010); t++;
+    s += print_case(bus_str(0b0000000000101010) + "-> " + bus_str(zero_extend(0b0000000000101010, 7)), zero_extend(0b0000000000101010, 7), (bus)0b0000000000101010); t++;
+    s += print_case(bus_str(0b0000000000101010) + "-> " + bus_str(zero_extend(0b0000000000101010, 4)), zero_extend(0b0000000000101010, 4), (bus)0b0000000000001010); t++;
+    s += print_case(bus_str(0b0000000000101010) + "-> " + bus_str(zero_extend(0b0000000000101010, 3)), zero_extend(0b0000000000101010, 3), (bus)0b0000000000000010); t++;
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
 
     cout << "---------------------" << endl << endl;
 }
@@ -541,7 +554,7 @@ void run_mem_tests()
 
     bit load = 0;
 
-    cout << TAB << "d" << TAB << TAB << TAB << TAB << " c-c q" << endl;
+    // cout << TAB << "d" << TAB << TAB << TAB << TAB << " c-c q" << endl;
 
     for(int i = 0; i < 16; i++) {
 
