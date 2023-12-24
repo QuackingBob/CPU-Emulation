@@ -40,6 +40,7 @@ bit uncombine_bits(bit a, int index)
     return (a >> index) & 0x0001;
 }
 
+// Done using wires, not gates so represented this way
 bus sign_extend(bus b, int len)
 {
     bit a = get_bit(b, len - 1);
@@ -50,6 +51,7 @@ bus sign_extend(bus b, int len)
     return b;
 }
 
+// Done using wires, not gates so represented this way
 bus zero_extend(bus b, int len)
 {
     for (int i = len; i < BUS_SIZE; i++)

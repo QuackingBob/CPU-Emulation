@@ -78,6 +78,8 @@ bus xor_bus(bus a, bus b)
     return c;
 }
 
+// Tri State Buffer
+
 bit tri_state_buffer(bit input, bit current, bit gate)
 {
     return pmos_transistor(gate, current) + nmos_transistor(gate, input);
@@ -96,6 +98,8 @@ bus tri_state_buffer_bus(bus input, bus current, bit gate)
 
     return result;
 }
+
+// Logical Bus Gates:
 
 bit and4(bit a1, bit a2, bit a3, bit a4) {
 

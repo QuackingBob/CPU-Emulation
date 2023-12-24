@@ -29,4 +29,6 @@ public:
     bus run(bit addr1_s, bit addr2_s0, bit addr2_s1, bus ir, bus sr1_out, bus pc);
 };
 
+bus marmux(bit select, bus ir, bus eval_addr);
+
 #endif

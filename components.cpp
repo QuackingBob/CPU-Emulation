@@ -57,6 +57,12 @@ bus eval_addr::addr1mux(bit s, bus sr1_out, bus pc)
 
 bus eval_addr::run(bit addr1_s, bit addr2_s0, bit addr2_s1, bus ir, bus sr1_out, bus pc)
 {
-    // TODO: Figure out what + means (or? add?)
-    return 0;
+    // TODO: Figure out what + means (or? add?) i think or
+    return or_bus(addr1mux(addr1_s, sr1_out, pc), addr2mux(addr2_s0, addr2_s1, ir));
+}
+
+// marmux
+bus marmux(bit select, bus ir, bus eval_addr)
+{
+    return mux1to2(eval_addr, zero_extend(ir, 8), select); // zext [7:0]
 }
