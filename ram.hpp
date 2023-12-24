@@ -9,9 +9,9 @@ using namespace std;
 
 class ram {
 
-private:
+// private:
 
-    bus
+//     bus
 
 
 
