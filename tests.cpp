@@ -205,7 +205,7 @@ void run_signal_tests()
     cout << "Sign Extend Test" << endl;
     s = 0;
     t = 0;
-    print_case(bus_str(0b0000000000101010), sign_extend(0b0000000000101010, 6), 0b0000000000101010)
+    print_case(bus_str(0b0000000000101010), sign_extend(0b0000000000101010, 6), 0b0000000000101010);
 
     cout << "---------------------" << endl << endl;
 }

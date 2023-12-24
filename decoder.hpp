@@ -9,5 +9,4 @@ static int decoded[MAX_INT];
 
 void decode(reg address);
 
-
 #endif

@@ -1,7 +1,8 @@
 #include "decoder.hpp"
-#include "gates.cpp"
+#include "gates.hpp"
 
-void decode(reg address){
+void decode(reg address)
+{
 
     for(int i = 0; i < 65536; i++) {
 
@@ -23,5 +24,3 @@ void decode(reg address){
         decoded[i] = and16(temp);
     }
 }
-
-

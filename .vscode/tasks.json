@@ -15,6 +15,9 @@
                 "alu.cpp",
                 "mux.cpp",
                 "mem.cpp",
+                "stats.cpp",
+                "decoder.cpp",
+                "components.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
