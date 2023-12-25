@@ -30,5 +30,6 @@ public:
 };
 
 bus marmux(bit select, bus ir, bus eval_addr);
+bus sr2mux(bit select, bus ir, bus sr2_out);
 
 #endif

@@ -25,3 +25,19 @@ bit mux2to4(bit zero, bit one, bit two, bit three, bit select0, bit select1) {
                 and_gate(select0, select1)
             );
 }
+
+bus mux1to2bus(bus zero, bus one, bit select) {
+    return select_bus(select, one, zero);
+}
+
+bus mux2to4bus(bus zero, bus one, bus two, bus three, bit select0, bit select1) {
+    return  mux1to2bus(
+                mux1to2bus(
+                    mux1to2bus(zero, one, select0),
+                    two,
+                    select1
+                ),
+                three,
+                and_gate(select0, select1)
+            );
+}

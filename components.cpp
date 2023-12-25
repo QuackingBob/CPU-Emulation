@@ -44,15 +44,15 @@ bus program_counter::run(bit s0, bit s1, bit ld_pc, bit clk, bus main_bus, bus a
 // Eval address
 bus eval_addr::addr2mux(bit s0, bit s1, bus ir)
 {
-    bus d2 = sign_extend(ir, 11); // [10:0]
-    bus d1 = sign_extend(ir, 9); // [8:0]
-    bus d0 = sign_extend(ir, 6); // [5:0]
-    return mux2to4(GND, d0, d1, d2, s0, s1);
+    bus d2 = sign_extend(ir, 11); // SEXT [10:0]
+    bus d1 = sign_extend(ir, 9); // SEXT [8:0]
+    bus d0 = sign_extend(ir, 6); // SEXT [5:0]
+    return mux2to4bus(GND, d0, d1, d2, s0, s1);
 }
 
 bus eval_addr::addr1mux(bit s, bus sr1_out, bus pc)
 {
-    return mux1to2(pc, sr1_out, s);
+    return mux1to2bus(pc, sr1_out, s);
 }
 
 bus eval_addr::run(bit addr1_s, bit addr2_s0, bit addr2_s1, bus ir, bus sr1_out, bus pc)
@@ -64,5 +64,12 @@ bus eval_addr::run(bit addr1_s, bit addr2_s0, bit addr2_s1, bus ir, bus sr1_out,
 // marmux
 bus marmux(bit select, bus ir, bus eval_addr)
 {
-    return mux1to2(eval_addr, zero_extend(ir, 8), select); // zext [7:0]
+    return mux1to2bus(eval_addr, zero_extend(ir, 8), select); // ZEXT [7:0]
 }
+
+// sr2mux
+bus sr2mux(bit select, bus ir, bus sr2_out)
+{
+    return mux1to2bus(sr2_out, sign_extend(ir, 5), select); //  SEXT [4:0]
+}
+
