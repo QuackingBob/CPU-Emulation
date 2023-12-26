@@ -40,6 +40,11 @@ bit xor_gate(bit a, bit b)
     return and_gate(nand(a, b), or_gate(a, b));
 }
 
+bit xnor_gate(bit a, bit b)
+{
+    return  not_gate(xor_gate(a, b));
+}
+
 // bus gates
 
 bus inv_bus(bus a)
@@ -117,4 +122,9 @@ bit and16(bus a16) {
     bit out2 = and8(get_bit(a16, 8), get_bit(a16, 9), get_bit(a16, 10), get_bit(a16, 11), get_bit(a16, 12), get_bit(a16, 13), get_bit(a16, 14), get_bit(a16, 15));
 
     return and_gate(out1, out2);
+}
+
+bit normalize(bit a)
+{
+    return !!a;
 }

@@ -41,3 +41,13 @@ bus mux2to4bus(bus zero, bus one, bus two, bus three, bit select0, bit select1) 
                 and_gate(select0, select1)
             );
 }
+
+// I could make this an array but to stay true to hardware, i made the 8 inputs separate 
+bus mux3to8bus(bus b0, bus b1, bus b2, bus b3, bus b4, bus b5, bus b6, bus b7, bit s0, bit s1, bit s2)
+{
+    return mux1to2bus(
+        mux2to4bus(b0, b1, b2, b3, s0, s1),
+        mux2to4bus(b4, b5, b6, b7, s0, s1),
+        s2
+    );
+}

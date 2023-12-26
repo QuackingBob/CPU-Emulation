@@ -32,4 +32,18 @@ public:
 bus marmux(bit select, bus ir, bus eval_addr);
 bus sr2mux(bit select, bus ir, bus sr2_out);
 
+class reg_file
+{
+private:
+    Parallel_Load_Register *registers;
+    const static int num_registers = 8;
+
+public:
+    reg_file();
+    void update(bit ld_reg, bit dr_0, bit dr_1, bit dr_2, bus data, bit clk);
+    bus sr1_load(bit sr1_0, bit sr1_1, bit sr1_2);
+    bus sr2_load(bit sr2_0, bit sr2_1, bit sr2_2);
+    ~reg_file();
+};
+
 #endif
