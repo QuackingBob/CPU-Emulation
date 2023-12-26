@@ -76,6 +76,7 @@ bus sr2mux(bit select, bus ir, bus sr2_out)
     return mux1to2bus(sr2_out, sign_extend(ir, 5), select); //  SEXT [4:0]
 }
 
+// register file
 reg_file::reg_file()
 {
     registers = (Parallel_Load_Register *) malloc(num_registers * sizeof(Parallel_Load_Register));
@@ -144,4 +145,39 @@ bus reg_file::sr2_load(bit sr2_0, bit sr2_1, bit sr2_2)
 reg_file::~reg_file()
 {
     free(registers);
+}
+
+// data bus
+data_bus::data_bus(bus init) : data(init)
+{}
+
+void data_bus::update_bus(bus value)
+{
+    data = value;
+}
+
+bus data_bus::read_bus()
+{
+    return data;
+}
+
+// main wiring object
+main_wiring::main_wiring()
+{
+    control_signals = (bit *) calloc(num_signals, sizeof(bit));
+}
+
+void main_wiring::write_signal(CONTROL_SIG signal, bit value)
+{
+    control_signals[signal] = value;
+}
+
+bit main_wiring::read_signal(CONTROL_SIG signal)
+{
+    return control_signals[signal];
+}
+
+main_wiring::~main_wiring()
+{
+    free(control_signals);
 }

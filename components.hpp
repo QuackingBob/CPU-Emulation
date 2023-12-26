@@ -46,4 +46,31 @@ public:
     ~reg_file();
 };
 
+class data_bus
+{
+private:
+    bus data;
+
+public:
+    data_bus(bus init);
+    void update_bus(bus value);
+    bus read_bus();
+};
+
+class main_wiring
+{
+private:
+    bit *control_signals;
+    const static int num_signals = 25;
+
+public:
+    main_wiring();
+    void write_signal(CONTROL_SIG signal, bit value);
+    bit read_signal(CONTROL_SIG signal);
+    bit& operator[](CONTROL_SIG signal) {
+        return control_signals[signal];
+    }
+    ~main_wiring();
+};
+
 #endif

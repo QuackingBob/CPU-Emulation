@@ -14,31 +14,33 @@
 #define BUS_SIZE 16
 #define COMB_BIT_SIZE 8
 
-static bit LD_PC;
-static bit LD_MAR;
-static bit LD_MDR;
-static bit LD_REG;
-static bit LD_IR;
-static bit LD_BEN;
-static bit LD_CC;
-static bit GATE_PC;
-static bit GATE_MDR;
-static bit GATE_ALU;
-static bit GATE_MARMUX;
-static bit PCMUX_1;
-static bit PCMUX_2;
-static bit DRMUX_1;
-static bit DRMUX_2;
-static bit SR1MUX_1;
-static bit SR1MUX_2;
-static bit ADDR1MUX;
-static bit ADDR2MUX_1;
-static bit ADDR2MUX_2;
-static bit MARMUX;
-static bit ALUK_1;
-static bit ALUK_2;
-static bit MIO_EN;
-static bit R_W;
+static enum CONTROL_SIG {
+    LD_PC,
+    LD_MAR,
+    LD_MDR,
+    LD_REG,
+    LD_IR,
+    LD_BEN,
+    LD_CC,
+    GATE_PC,
+    GATE_MDR,
+    GATE_ALU,
+    GATE_MARMUX,
+    PCMUX_1,
+    PCMUX_2,
+    DRMUX_1,
+    DRMUX_2,
+    SR1MUX_1,
+    SR1MUX_2,
+    ADDR1MUX,
+    ADDR2MUX_1,
+    ADDR2MUX_2,
+    MARMUX,
+    ALUK_1,
+    ALUK_2,
+    MIO_EN,
+    R_W
+};
 
 int check_index(int index);
 bit get_bit(bus b, int index);
