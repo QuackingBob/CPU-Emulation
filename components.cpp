@@ -177,6 +177,11 @@ bit main_wiring::read_signal(CONTROL_SIG signal)
     return control_signals[signal];
 }
 
+bit& main_wiring::operator[](CONTROL_SIG signal) 
+{
+    return control_signals[signal];
+}
+
 main_wiring::~main_wiring()
 {
     free(control_signals);

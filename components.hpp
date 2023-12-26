@@ -67,9 +67,7 @@ public:
     main_wiring();
     void write_signal(CONTROL_SIG signal, bit value);
     bit read_signal(CONTROL_SIG signal);
-    bit& operator[](CONTROL_SIG signal) {
-        return control_signals[signal];
-    }
+    bit& operator[](CONTROL_SIG signal);
     ~main_wiring();
 };
 
