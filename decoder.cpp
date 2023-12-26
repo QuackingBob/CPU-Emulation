@@ -4,11 +4,11 @@
 void decode(reg address)
 {
 
-    for(int i = 0; i < 65536; i++) {
+    for(int i = 0; i < MAX_INT; i++) {
 
         reg temp = address;
 
-        for(int j = 15; j >= 0; j--) {
+        for(int j = BUS_SIZE - 1; j >= 0; j--) {
 
             int result = i & 0x00000001;
 
