@@ -482,6 +482,25 @@ void run_mux_tests()
     }
     cout << TAB << s << "/" << t << " CASES PASSED" << endl;
 
+    cout << "Mux 3 to 8 bus test" << endl;
+    s = 0;
+    t = 0;
+    cout << TAB << "[bus 0-7],s:0  1  2" << endl;
+    for (bit s0 = 0; s0 < 2; s0++)
+    {
+        for (bit s1 = 0; s1 < 2; s1++)
+        {
+            for (bit s2 = 0; s2 < 2; s2++)
+            {
+                string label = "[01234567], " + bit_str(s0) + ", " + bit_str(s1) + ", " + bit_str(s2);
+                bus expect = (s0 + (s1 << 1) + (s2 << 2));
+                s += print_case(label, mux3to8bus(0,1,2,3,4,5,6,7,s0,s1,s2), expect);
+                t++;
+            }
+        }
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
     cout << "---------------------" << endl << endl;
 }
 
