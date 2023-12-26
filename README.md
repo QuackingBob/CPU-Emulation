@@ -1,6 +1,6 @@
-# LC3 CPU Emulation
+# LC3 Processor Emulation
 
-### This is our attempt to emulate the LC3 CPU in CPP from a simulated transistor circuit upwards. 
+### This is our attempt to emulate the LC3 Processor in CPP from a simulated transistor circuit upwards. 
 
 ### Resources:
 - [Details on registers](https://www.cs.colostate.edu/~cs270/.Fall18/resources/PattPatelAppA.pdf)
