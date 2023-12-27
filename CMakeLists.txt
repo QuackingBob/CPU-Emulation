@@ -12,6 +12,7 @@ add_library(stats stats.cpp stats.hpp)
 add_library(components components.cpp components.hpp)
 add_library(ram ram.cpp ram.hpp)
 add_library(decoder decoder.cpp decoder.hpp)
+add_library(processor processor.cpp processor.hpp)
 
 add_executable(tests tests.cpp)
-target_link_libraries(tests PRIVATE signals arithmetics gates alu mux switches stats mem components ram decoder)
+target_link_libraries(tests PRIVATE signals arithmetics gates alu mux switches stats mem components ram decoder processor)
