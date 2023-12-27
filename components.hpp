@@ -61,7 +61,7 @@ class main_wiring
 {
 private:
     bit *control_signals;
-    const static int num_signals = 25;
+    const static int num_signals = 35;
 
 public:
     main_wiring();
@@ -69,6 +69,12 @@ public:
     bit read_signal(CONTROL_SIG signal);
     bit& operator[](CONTROL_SIG signal);
     ~main_wiring();
+};
+
+class rom_wiring : main_wiring
+{
+private: 
+    const static int num_signals = 25;
 };
 
 #endif
