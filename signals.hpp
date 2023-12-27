@@ -14,7 +14,7 @@
 #define BUS_SIZE 16
 #define COMB_BIT_SIZE 8
 
-static enum CONTROL_SIG {
+enum CONTROL_SIG {
     LD_PC,
     LD_MAR,
     LD_MDR,

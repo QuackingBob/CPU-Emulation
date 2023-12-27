@@ -35,7 +35,7 @@ bus sr2mux(bit select, bus ir, bus sr2_out);
 class reg_file
 {
 private:
-    Parallel_Load_Register *registers;
+    Parallel_Load_Register **registers;
     const static int num_registers = 8;
 
 public:

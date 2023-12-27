@@ -60,7 +60,7 @@ bus eval_addr::addr1mux(bit s, bus sr1_out, bus pc)
 
 bus eval_addr::run(bit addr1_s, bit addr2_s0, bit addr2_s1, bus ir, bus sr1_out, bus pc)
 {
-    // TODO: Figure out what + means (or? add?) i think or
+    // TODO: Figure out what + means (or? add?)
     return adder(addr1mux(addr1_s, sr1_out, pc), addr2mux(addr2_s0, addr2_s1, ir));
 }
 
@@ -79,26 +79,26 @@ bus sr2mux(bit select, bus ir, bus sr2_out)
 // register file
 reg_file::reg_file()
 {
-    registers = (Parallel_Load_Register *) malloc(num_registers * sizeof(Parallel_Load_Register));
+    registers = new Parallel_Load_Register*[num_registers];
     for (int i = 0; i < num_registers; i++)
     {
-        registers[i] = Parallel_Load_Register(0, BUS_SIZE);
+        registers[i] = new Parallel_Load_Register(0, BUS_SIZE);
     }
 }
 
 void reg_file::update(bit ld_reg, bit dr_0, bit dr_1, bit dr_2, bus data, bit clk)
 {
     // this is just a lot of repeated gates, i just automates the placement of wires
-    for (int i = 0; i < num_registers; i++)
+    for (bit i = 0; i < num_registers; i++)
     {
-        registers[i].run(
+        registers[i] -> run(
             and_gate(
                 ld_reg,
                 and_gate(
-                    xnor_gate(normalize(i / 4), dr_2),
+                    xnor_gate(uncombine_bits(i, 2), dr_2),
                     and_gate(
-                        xnor_gate(normalize(i / 2), dr_1),
-                        xnor_gate(normalize(i), dr_0)
+                        xnor_gate(uncombine_bits(i, 1), dr_1),
+                        xnor_gate(uncombine_bits(i, 0), dr_0)
                     )
                 )
             ),
@@ -111,14 +111,14 @@ void reg_file::update(bit ld_reg, bit dr_0, bit dr_1, bit dr_2, bus data, bit cl
 bus reg_file::sr1_load(bit sr1_0, bit sr1_1, bit sr1_2)
 {
     return mux3to8bus(
-        registers[0].get_output(),
-        registers[1].get_output(),
-        registers[2].get_output(),
-        registers[3].get_output(),
-        registers[4].get_output(),
-        registers[5].get_output(),
-        registers[6].get_output(),
-        registers[7].get_output(),
+        registers[0] -> get_output(),
+        registers[1] -> get_output(),
+        registers[2] -> get_output(),
+        registers[3] -> get_output(),
+        registers[4] -> get_output(),
+        registers[5] -> get_output(),
+        registers[6] -> get_output(),
+        registers[7] -> get_output(),
         sr1_0,
         sr1_1,
         sr1_2
@@ -128,14 +128,14 @@ bus reg_file::sr1_load(bit sr1_0, bit sr1_1, bit sr1_2)
 bus reg_file::sr2_load(bit sr2_0, bit sr2_1, bit sr2_2)
 {
     return mux3to8bus(
-        registers[0].get_output(),
-        registers[1].get_output(),
-        registers[2].get_output(),
-        registers[3].get_output(),
-        registers[4].get_output(),
-        registers[5].get_output(),
-        registers[6].get_output(),
-        registers[7].get_output(),
+        registers[0] -> get_output(),
+        registers[1] -> get_output(),
+        registers[2] -> get_output(),
+        registers[3] -> get_output(),
+        registers[4] -> get_output(),
+        registers[5] -> get_output(),
+        registers[6] -> get_output(),
+        registers[7] -> get_output(),
         sr2_0,
         sr2_1,
         sr2_2
@@ -144,7 +144,12 @@ bus reg_file::sr2_load(bit sr2_0, bit sr2_1, bit sr2_2)
 
 reg_file::~reg_file()
 {
-    free(registers);
+    for (int i = 0; i < num_registers; i++)
+    {
+        delete registers[i];
+    }
+
+    delete[] registers;
 }
 
 // data bus

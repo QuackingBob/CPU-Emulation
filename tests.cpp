@@ -21,7 +21,7 @@ using namespace std;
 
 int print_case(string in, int out, int expect)
 {
-    cout << TAB << in << ": " << out << " " << (out == expect ? "SUCCESS" : "FAIL") << endl;
+    cout << TAB << in << ": " << out << " exp: " << expect << " " << (out == expect ? "SUCCESS" : "FAIL") << endl;
     return out == expect;
 }
 
@@ -651,6 +651,58 @@ void run_component_tests()
         cout << TAB << out << ", ";
     }
     cout << endl;
+
+    cout << "Testing Eval Addr" << endl;
+    eval_addr evaluate_address;
+    int s = 0;
+    int t = 0;
+    bus ir = 0b1010101010101010;
+    bus pc = 0x0003;
+    bus sr1 = 0x0001;
+    cout << TAB << "ir: " << bus_str(ir) << ", sr1: " << bus_str(sr1) << ", pc: " << bus_str(pc) << endl;
+    for (bit i = 0; i < 8; i++)
+    {
+        bit s0 = uncombine_bits(i, 0);
+        bit s1 = uncombine_bits(i, 1);
+        bit s2 = uncombine_bits(i, 2);
+        out = evaluate_address.run(s0, s1, s2, ir, sr1, pc);
+        string label = bit_str(s0) + " " + bit_str(s1) + " " + bit_str(s2) + " -> " + bus_str(out);
+        bus a;
+        switch(i >> 1)
+        {
+            case 0: a = 0; break;
+            case 1: a = sign_extend(ir, 6); break;
+            case 2: a = sign_extend(ir, 9); break;
+            case 3: a = sign_extend(ir, 11); break;
+        }
+        bus expect = a + (s0 ? sr1 : pc);
+        s += print_case(label, out, expect); t++;
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+
+    cout << "Reg File" << endl;
+    reg_file register_file;
+    s = 0;
+    t = 0;
+    for (bit ld = 0; ld < 2; ld++)
+    {
+        int output = 0;
+        int expect = 0;
+        for (bit i = 0; i < 8; i++)
+        {
+            bit s0 = uncombine_bits(i, 0), s1 = uncombine_bits(i, 1), s2 = uncombine_bits(i, 2);
+            for (clk = 0; clk < 2; clk++)
+            {
+                register_file.update(ld, s0, s1, s2, i, clk);
+            }
+            output = 10 * output + static_cast<int>(register_file.sr1_load(s0, s1, s2));
+            expect = 10 * expect + i;
+        }
+        expect = ld ? expect : 0;
+        string label = "ld = " + bit_str(ld);
+        s += print_case(label, output, expect); t++;
+    }
+    cout << TAB << s << "/" << t << " CASES PASSED" << endl;
 
     cout << "---------------------" << endl << endl;
 }
