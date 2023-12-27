@@ -719,10 +719,6 @@ int main()
     run_mem_tests();
     run_component_tests();
 
-    main_wiring wiring;
-    wiring[LD_CC] = 1;
-    wiring[LD_CC];
-
     cout << stats::transistor_count << " Transistor Operations used" << endl;
     return 0;
 }
