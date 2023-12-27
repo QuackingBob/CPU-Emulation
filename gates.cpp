@@ -74,6 +74,16 @@ bus or_bus(bus a, bus b)
     return c;
 }
 
+bus not_bus(bus a)
+{
+    bus b;
+    for(int i = 0; i < 16; i++)
+    {
+        set_bit(b, i, not_gate(get_bit(a, i)));
+    }
+    return b;
+}
+
 bus xor_bus(bus a, bus b)
 {
     bus c;
@@ -127,4 +137,14 @@ bit and16(bus a16) {
 bit normalize(bit a)
 {
     return !!a;
+}
+
+bit and3(bit a1, bit a2, bit a3)
+{
+    return and_gate(a1, and_gate(a2, a3));
+}
+
+bit and6(bit a1, bit a2, bit a3, bit a4, bit a5, bit a6)
+{
+    return and_gate(and3(a1, a2, a3), and3(a4, a5, a6));
 }

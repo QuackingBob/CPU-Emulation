@@ -14,6 +14,90 @@
 #define BUS_SIZE 16
 #define COMB_BIT_SIZE 8
 
+
+static struct ROM_SIGNALS {
+    bit LD_PC;
+    bit LD_MAR;
+    bit LD_MDR;
+    bit LD_REG;
+    bit LD_IR;
+    bit LD_BEN;
+    bit LD_CC;
+    bit GATE_PC;
+    bit GATE_MDR;
+    bit GATE_ALU;
+    bit GATE_MARMUX;
+    bit PCMUX_1;
+    bit PCMUX_2;
+    bit DRMUX_1;
+    bit DRMUX_2;
+    bit SR1MUX_1;
+    bit SR1MUX_2;
+    bit ADDR1MUX;
+    bit ADDR2MUX_1;
+    bit ADDR2MUX_2;
+    bit MARMUX;
+    bit ALUK_1;
+    bit ALUK_2;
+    bit MIO_EN;
+    bit R_W;
+    bit COND0;
+    bit COND1;
+    bit COND2;
+    bit IRD;
+    bus J;
+} romSignals;
+
+static struct INPUT_SIGNALS {
+
+    bit BEN;
+    bit R;
+    bit JSR;
+
+} inputSignals;
+
+
+struct ROM_SIGNALS {
+    bit LD_PC;
+    bit LD_MAR;
+    bit LD_MDR;
+    bit LD_REG;
+    bit LD_IR;
+    bit LD_BEN;
+    bit LD_CC;
+    bit GATE_PC;
+    bit GATE_MDR;
+    bit GATE_ALU;
+    bit GATE_MARMUX;
+    bit PCMUX_1;
+    bit PCMUX_2;
+    bit DRMUX_1;
+    bit DRMUX_2;
+    bit SR1MUX_1;
+    bit SR1MUX_2;
+    bit ADDR1MUX;
+    bit ADDR2MUX_1;
+    bit ADDR2MUX_2;
+    bit MARMUX;
+    bit ALUK_1;
+    bit ALUK_2;
+    bit MIO_EN;
+    bit R_W;
+    bit COND0;
+    bit COND1;
+    bit COND2;
+    bit IRD;
+    bus J;
+} romSignals;
+
+static struct INPUT_SIGNALS {
+
+    bit BEN;
+    bit R;
+    bit JSR;
+
+} inputSignals;
+
 enum CONTROL_SIG {
     LD_PC,
     LD_MAR,
@@ -39,7 +123,14 @@ enum CONTROL_SIG {
     ALUK_1,
     ALUK_2,
     MIO_EN,
-    R_W
+    R_W,
+    R,
+    BEN,
+    JSR,
+    IRD,
+    COND0,
+    COND1,
+    COND2
 };
 
 int check_index(int index);

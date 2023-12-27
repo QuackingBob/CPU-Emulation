@@ -44,6 +44,44 @@ bus program_counter::run(bit s0, bit s1, bit ld_pc, bit clk, bus main_bus, bus a
     return load_pc(ld_pc, pc_mux(s0, s1, main_bus, addr), clk);
 }
 
+instruction_register::instruction_register(bit state) : ir(state, 16)
+{}
+
+reg instruction_register::get_ir()
+{
+    return ir.get_output();
+}
+
+void instruction_register::run(bit ld_ir, bit clk, reg instruction)
+{
+    ir.run(ld_ir, instruction, clk);
+}
+
+memory_address_register::memory_address_register(bit state) : mar(state, 16)
+{}
+
+reg memory_address_register::get_mar()
+{
+    return mar.get_output();
+}
+
+void memory_address_register::run(bit ld_mar, bit clk, reg instruction)
+{
+    mar.run(ld_mar, instruction, clk);
+}
+
+memory_data_register::memory_data_register(bit state) : mdr(state, 16)
+{}
+
+reg memory_data_register::get_mdr()
+{
+    return mdr.get_output();
+}
+
+void memory_data_register::run(bit ld_mdr, bit clk, reg instruction)
+{
+    mdr.run(ld_mdr, instruction, clk);
+}
 // Eval address
 bus eval_addr::addr2mux(bit s0, bit s1, bus ir)
 {
