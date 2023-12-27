@@ -19,6 +19,39 @@ public:
     bus run(bit s0, bit s1, bit ld_pc, bit clk, bus main_bus, bus addr);
 };
 
+class instruction_register
+{
+private:
+    Parallel_Load_Register ir;
+
+public:
+    instruction_register(bit state);
+    bus get_ir();
+    void run(bit ld_ir, bit clk, reg instruction);
+};
+
+class memory_address_register
+{
+private:
+    Parallel_Load_Register mar;
+
+public:
+    memory_address_register(bit state);
+    bus get_mar();
+    void run(bit ld_mar, bit clk, reg instruction);
+};
+
+class memory_data_register
+{
+private:
+    Parallel_Load_Register mdr;
+
+public:
+    memory_data_register(bit state);
+    bus get_mdr();
+    void run(bit ld_mdr, bit clk, reg instruction);
+};
+
 class eval_addr
 {
 private:
@@ -70,5 +103,6 @@ public:
     bit& operator[](CONTROL_SIG signal);
     ~main_wiring();
 };
+
 
 #endif
