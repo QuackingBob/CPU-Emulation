@@ -8,8 +8,8 @@ public:
     bit clock;
     // need control
     program_counter pc;
-    ram memory;
+    Ram memory;
 
     int tick();
-    Processor(): clock(0), pc(0), memory() {};
+    Processor(): clock(0), pc(0), memory(0) {};
 };
