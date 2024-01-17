@@ -15,7 +15,7 @@ private:
     // need control
     program_counter pc;
     Ram memory;
-    state_transition *state;
+    // state_transition *state;
 
 public: 
     int tick();
