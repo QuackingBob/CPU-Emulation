@@ -3,3 +3,4 @@ tests.exe
 cmake-build-debug/
 .vscode/
 cmake-build-debug/*
+fsm.py

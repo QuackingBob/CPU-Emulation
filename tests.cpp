@@ -22,22 +22,9 @@ using namespace std;
 int print_case(string in, int out, int expect)
 {
     cout << TAB << in << ": " << out << " exp: " << expect << " " << (out == expect ? "SUCCESS" : "FAIL") << endl;
+    stats::success_count += out == expect;
+    stats::case_count += 1;
     return out == expect;
-}
-
-string bit_str(bit a)
-{
-    return std::to_string(static_cast<int>(a));
-}
-
-string bus_str(bus b)
-{
-    return std::bitset<sizeof(bus) * 8>(b).to_string();
-}
-
-string bit_str_binary(bit a)
-{
-    return std::bitset<sizeof(bit) * 8>(a).to_string();
 }
 
 int t_nand()
@@ -531,6 +518,8 @@ void run_mem_tests()
         }
     }
     cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+    stats::success_count += s;
+    stats::case_count += t;
 
     cout << "Testing Flip-Flop" << endl;
     D_Flip_Flop flip(1);
@@ -557,6 +546,8 @@ void run_mem_tests()
         prev_d = d;
     }
     cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+    stats::success_count += s;
+    stats::case_count += t;
 
     cout << "---------------------" << endl << endl;
 
@@ -565,16 +556,13 @@ void run_mem_tests()
     Parallel_Load_Register reggie(0, 16);
 
     reg d = 0x0001;
-
     s = 0;
     t = 0;
     prev_clk = 1;
     reg prev_data = 0;
-
     bit load = 0;
 
     // cout << TAB << "d" << TAB << TAB << TAB << TAB << " c-c q" << endl;
-
     for(int i = 0; i < 16; i++) {
 
         if(i >= 8) {
@@ -595,12 +583,11 @@ void run_mem_tests()
         prev_data = d;
 
         d = d << 1;
-
-
-
     }
 
     cout << TAB << s << "/" << t << " CASES PASSED" << endl;
+    stats::success_count += s;
+    stats::case_count += t;
 
     cout << "---------------------" << endl << endl;
 
@@ -720,5 +707,6 @@ int main()
     run_component_tests();
 
     cout << stats::transistor_count << " Transistor Operations used" << endl;
+    cout << stats::success_count << " CASES OUT OF " << stats::case_count << " CASES PASSED" << endl;
     return 0;
 }

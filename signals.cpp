@@ -60,3 +60,18 @@ bus zero_extend(bus b, int len)
     }
     return b;
 }
+
+string bit_str(bit a)
+{
+    return std::to_string(static_cast<int>(a));
+}
+
+string bus_str(bus b)
+{
+    return std::bitset<sizeof(bus) * 8>(b).to_string();
+}
+
+string bit_str_binary(bit a)
+{
+    return std::bitset<sizeof(bit) * 8>(a).to_string();
+}

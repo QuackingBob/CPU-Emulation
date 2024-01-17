@@ -5,7 +5,7 @@
 #ifndef ROM_HPP
 #define ROM_HPP
 
-#include "tests.cpp"
+#include "signals.hpp"
 #include "ram.hpp"
 
 using namespace std;
@@ -22,6 +22,5 @@ public:
     ROM_SIGNALS read(reg address);
 
 };
-
 
 #endif

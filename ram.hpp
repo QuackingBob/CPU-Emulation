@@ -3,6 +3,8 @@
 
 #include "gates.hpp"
 #include "decoder.hpp"
+#include "signals.hpp"
+
 #include <iostream>
 #include <fstream>
 
@@ -12,8 +14,7 @@ class Ram {
 
 private:
     bus memory[65536];
-
-
+    INPUT_SIGNALS inputSignals;
 
 public:
     Ram(bus start);

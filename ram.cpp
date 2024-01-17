@@ -1,5 +1,4 @@
 #include "ram.hpp"
-#include "tests.cpp"
 
 using namespace std;
 

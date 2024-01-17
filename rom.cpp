@@ -3,6 +3,12 @@
 //
 
 #include "rom.hpp"
+#include "signals.hpp"
+
+#include <iostream>
+#include <istream>
+#include <bitset>
+#include <string>
 
 Rom::Rom()
 {
