@@ -2,12 +2,12 @@
 //#include "rom.hpp"
 #include "components.hpp"
 
-typedef struct state_transition
-{
-    int state_count;
-    state_transition **transition_states;
-    template <typename T> state_transition* (*transition)(T ...);
-} state_transition;
+// typedef struct state_transition
+// {
+//     int state_count;
+//     state_transition **transition_states;
+//     template <typename T> state_transition* (*transition)(T ...);
+// } state_transition;
 
 class Processor {
 private:
