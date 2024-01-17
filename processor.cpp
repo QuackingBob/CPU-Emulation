@@ -25,18 +25,18 @@ int Processor::tick() {
     return 0;
 }
 
-int Processor::reset_state()
-{
-    while (state -> state_count != 18)
-    {
-        state = state -> transition_state;
-    }
-}
+// int Processor::reset_state()
+// {
+//     while (state -> state_count != 18)
+//     {
+//         state = state -> transition_state;
+//     }
+// }
 
-int Processor::init_state_graph()
-{
+// int Processor::init_state_graph()
+// {
 
-}
+// }
 
 Processor::~Processor()
 {
@@ -44,9 +44,9 @@ Processor::~Processor()
     // while (next -> s)
 }
 
-state_transition* update_state(int r_bar, state_transition *state)
-{
-    if (state -> transition_cond(r_bar))
-        return state -> transition_state;
-    return state;
-}
+// state_transition* update_state(int r_bar, state_transition *state)
+// {
+//     if (state -> transition_cond(r_bar))
+//         return state -> transition_state;
+//     return state;
+// }

@@ -19,8 +19,8 @@ private:
 
 public: 
     int tick();
-    int reset_state();
-    int init_state_graph();
+    // int reset_state();
+    // int init_state_graph();
     Processor() : clock(0), pc(0), memory(0) {};
     ~Processor();
 };
