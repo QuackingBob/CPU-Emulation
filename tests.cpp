@@ -694,9 +694,8 @@ void run_component_tests()
     cout << "---------------------" << endl << endl;
 }
 
-int main()
+int run_all_tests()
 {
-    stats::reset();
     run_gate_tests();
     run_signal_tests();
     run_arithmetic_tests();
@@ -705,8 +704,17 @@ int main()
     run_mux_tests();
     run_mem_tests();
     run_component_tests();
+    return 0;
+}
+
+int main()
+{
+    stats::reset();
+    double time;
+    time_it(time, &run_all_tests);
 
     cout << stats::transistor_count << " Transistor Operations used" << endl;
     cout << stats::success_count << " CASES OUT OF " << stats::case_count << " CASES PASSED" << endl;
+    cout << "Tests took " << time << " microseconds to run" << endl;
     return 0;
 }

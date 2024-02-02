@@ -1,6 +1,9 @@
 tests.exe
+opt_tests.exe
 .idea
 cmake-build-debug/
 .vscode/
 cmake-build-debug/*
 fsm.py
+temp_tests.cpp
+opt_tests*

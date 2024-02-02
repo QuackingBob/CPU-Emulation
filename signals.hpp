@@ -53,9 +53,9 @@ struct ROM_SIGNALS {
 
 struct INPUT_SIGNALS {
 
-    bit BEN;
-    bit R;
-    bit JSR;
+    static bit BEN;
+    static bit R;
+    static bit JSR;
 
 };
 
